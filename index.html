@@ -69,14 +69,14 @@
   main{
     display:grid;
     grid-template-columns: minmax(0,1fr) 300px;
-    max-width:1180px;
+    max-width:min(1400px, 92vw);
     margin:0 auto;
     align-items:start;
   }
 
   .paper{
-    padding:2.6rem 5.5vw 4.5rem;
-    border-right:1px solid var(--black);
+      padding:2.6rem clamp(1.25rem, 3vw, 2.75rem) 4.5rem;
+      border-right:1px solid var(--black);
   }
   .paper h2{
     font-weight:600;
