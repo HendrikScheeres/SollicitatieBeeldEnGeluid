@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Onderzoeker AI en Digitaal Erfgoed — Match Log</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#111111;
+    --white:#ffffff;
+    --gray:#666666;
+    --gray-light:#bbbbbb;
+    --gray-faint:#e6e6e6;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background:var(--white);
+    color:var(--black);
+    font-family:'IBM Plex Mono', ui-monospace, Consolas, monospace;
+    line-height:1.65;
+    font-size:14px;
+  }
+
+  a{ color:var(--black); }
+
+  header{
+    border-bottom:1px solid var(--black);
+    padding:2.4rem 6vw 1.6rem;
+  }
+  .eyebrow{
+    font-size:0.7rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--gray);
+    margin-bottom:0.7rem;
+  }
+  h1{
+    font-weight:600;
+    font-size:clamp(1.3rem, 2.6vw, 1.9rem);
+    line-height:1.3;
+    margin:0 0 1rem;
+    letter-spacing:-0.01em;
+  }
+  .org-line{
+    font-size:0.78rem;
+    color:var(--gray);
+    display:flex;
+    flex-wrap:wrap;
+    gap:0.4em 1.2em;
+    margin-bottom:1.4rem;
+  }
+  .org-line span::before{content:"/ ";}
+
+  .counter-line{
+    font-size:0.72rem;
+    color:var(--gray);
+    border-top:1px dashed var(--gray-light);
+    padding-top:0.8rem;
+  }
+  .counter-line b{ color:var(--black); }
+
+  main{
+    display:grid;
+    grid-template-columns: minmax(0,1fr) 300px;
+    max-width:1180px;
+    margin:0 auto;
+    align-items:start;
+  }
+
+  .paper{
+    padding:2.6rem 5.5vw 4.5rem;
+    border-right:1px solid var(--black);
+  }
+  .paper h2{
+    font-weight:600;
+    font-size:0.86rem;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    margin:2.4rem 0 0.9rem;
+    padding-bottom:0.4rem;
+    border-bottom:1px solid var(--black);
+  }
+  .paper h2:first-of-type{margin-top:0.2rem;}
+  .paper p{margin:0 0 1.1rem;}
+  .paper ul{margin:0 0 1.1rem; padding-left:1.2rem;}
+  .paper li{margin-bottom:0.6rem;}
+  .paper .role-title{
+    font-weight:600;
+    font-size:1.05rem;
+    margin:0 0 1.8rem;
+    padding-bottom:0.6rem;
+    border-bottom:1px solid var(--black);
+  }
+
+  mark.hl{
+    background:var(--gray-faint);
+    color:var(--black);
+    cursor:pointer;
+    padding:0.02em 0.1em;
+    border-bottom:1px solid var(--black);
+    transition:background .12s ease;
+  }
+  mark.hl:hover{ background:var(--gray-light); }
+  mark.hl.active{
+    background:var(--black);
+    color:var(--white);
+  }
+  mark.hl::after{
+    content:attr(data-tag);
+    font-size:0.62em;
+    vertical-align:super;
+    color:var(--gray);
+    margin-left:0.15em;
+  }
+  mark.hl.active::after{ color:var(--gray-light); }
+
+  aside{
+    padding:2.6rem 1.6rem 4rem;
+    position:sticky;
+    top:0;
+    align-self:start;
+    height:100vh;
+    overflow-y:auto;
+  }
+  .log-title{
+    font-size:0.72rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    margin-bottom:0.5rem;
+  }
+  .log-sub{
+    font-size:0.74rem;
+    color:var(--gray);
+    margin-bottom:1.4rem;
+  }
+  .log-entry{
+    border-top:1px solid var(--black);
+    padding:0.8rem 0;
+    cursor:pointer;
+  }
+  .log-entry:last-child{ border-bottom:1px solid var(--black); }
+  .log-head{
+    display:flex;
+    align-items:baseline;
+    gap:0.55rem;
+  }
+  .log-idx{
+    font-size:0.72rem;
+    color:var(--gray);
+    flex-shrink:0;
+  }
+  .log-name{
+    font-weight:600;
+    font-size:0.8rem;
+    line-height:1.35;
+  }
+  .log-entry.active{ background:var(--black); margin:0 -1.6rem; padding-left:1.6rem; padding-right:1.6rem; }
+  .log-entry.active .log-idx{ color:var(--gray-light); }
+  .log-entry.active .log-name{ color:var(--white); }
+  .log-body{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .25s ease;
+    font-size:0.76rem;
+    color:var(--gray);
+  }
+  .log-entry.active .log-body{ max-height:220px; margin-top:0.55rem; color:var(--gray-light); }
+
+  #bubble{
+    position:fixed;
+    max-width:280px;
+    background:var(--white);
+    border:1px solid var(--black);
+    padding:0.8rem 0.9rem;
+    font-size:0.76rem;
+    line-height:1.5;
+    z-index:100;
+    box-shadow:4px 4px 0 var(--black);
+    display:none;
+  }
+  #bubble.show{ display:block; }
+  #bubble .bubble-idx{
+    font-size:0.68rem;
+    color:var(--gray);
+    display:block;
+    margin-bottom:0.3rem;
+  }
+  #bubble .bubble-name{
+    font-weight:600;
+    display:block;
+    margin-bottom:0.4rem;
+  }
+  #bubble .bubble-close{
+    position:absolute;
+    top:0.4rem;
+    right:0.55rem;
+    cursor:pointer;
+    color:var(--gray);
+    font-size:0.85rem;
+    line-height:1;
+  }
+  #bubble .bubble-close:hover{ color:var(--black); }
+
+  footer{
+    border-top:1px solid var(--black);
+    text-align:center;
+    padding:1.2rem;
+    font-size:0.7rem;
+    color:var(--gray);
+  }
+
+  @media (max-width: 900px){
+    main{grid-template-columns:1fr;}
+    .paper{ border-right:none; border-bottom:1px solid var(--black); }
+    aside{
+      position:static;
+      height:auto;
+      padding:2rem 6vw 3rem;
+    }
+    .log-entry.active{ margin:0 -6vw; padding-left:6vw; padding-right:6vw; }
+    header{padding:2rem 6vw 1.4rem;}
+    #bubble{ max-width:80vw; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Beeld &amp; Geluid / Vacature</div>
+  <h1>Onderzoeker AI &amp; Digitaal Erfgoed</h1>
+  <div class="org-line">
+    <span>24 uur per week</span>
+    <span>Hilversum</span>
+    <span>Schaal 9 CAO</span>
+    <span>Horizon Europe / INFINITY</span>
+  </div>
+  <div class="counter-line"><b id="counter">0</b> passages gemarkeerd — klik op een markering voor een toelichting, of bekijk het volledige match log rechts.</div>
+</header>
+
+<main>
+  <article class="paper" id="vacancy-text">
+
+    <p class="intro">Wil je onderzoeken hoe je AI erfgoedcollecties beter vindbaar, bruikbaar en betekenisvol kan maken? Vind je het interessant om use cases te ontwikkelen waarin erfgoeddata, metadata, zoektechnologie en gebruikersbehoeften samenkomen? En wil je bijdragen aan een internationaal <mark class="hl" data-id="1" data-tag="M01">Horizon Europe-project</mark> waarin Beeld &amp; Geluid samen met Europese partners werkt aan verantwoorde AI-oplossingen voor digitaal erfgoed? Dan hebben we goed nieuws, want wij zoeken een:</p>
+
+    <p class="role-title">Onderzoeker AI en Digitaal Erfgoed<br>(24 uur per week)</p>
+
+    <h2>Wat ga je doen?</h2>
+    <p>Beeld &amp; Geluid is partner in onderzoeksprojecten en programma's waarin we onderzoeken hoe kunstmatige intelligentie (AI) de toegang tot erfgoedcollecties kan verbeteren en nieuwe vormen van gebruik mogelijk maakt. Denk aan het <mark class="hl" data-id="2" data-tag="M02">(semi)automatisch verrijken van metadata</mark>, het <mark class="hl" data-id="3" data-tag="M03">ondersteunen van zoekprocessen</mark> en het toegankelijk maken van collecties voor nieuwe toepassingen en doelgroepen.</p>
+
+    <p>Daarbij kijken we zowel naar de mogelijkheden van AI als naar verantwoorde inzet. Samen met partners in binnen- en buitenland draagt Beeld &amp; Geluid bij aan de ontwikkeling van Public AI: AI die publieke waarde creëert en is gebaseerd op betrouwbare data, transparante governance en maatschappelijke verantwoordelijkheid. Deze visie is onder meer uitgewerkt in een recent white paper dat Beeld &amp; Geluid samen met Europeana en andere partners heeft geschreven.</p>
+
+    <p>Voor projecten zoals het Horizon Europe-project INFINITY (infinity-eccch.eu) zoekt Beeld &amp; Geluid een onderzoeker. We zoeken iemand die goed gedijt in een <mark class="hl" data-id="4" data-tag="M04">interdisciplinaire onderzoekscontext</mark>, waar vakgebieden als science and technology studies, computer science, erfgoedstudies en digital humanities samenkomen.</p>
+
+    <p>Als onderzoeker werk je aan het <mark class="hl" data-id="5" data-tag="M05">definiëren van use cases</mark>, het <mark class="hl" data-id="6" data-tag="M06">voorbereiden en uitvoeren van evaluaties met eindgebruikers</mark> en het vertalen van projectresultaten naar duurzame oplossingen voor de erfgoedsector. Je werkt daarbij nauw samen met technische experts, collectieprofessionals, onderzoekers en externe partners.</p>
+
+    <p>De projectcontext is zowel Europees als nationaal. Je werkt onder meer binnen ontwikkelingen rond de <mark class="hl" data-id="7" data-tag="M07">Data Space for Cultural Heritage</mark>, de Collaborative Cloud for Cultural Heritage en nationale programma's zoals de Nationale Wetenschapsagenda, Netwerk Digitaal Erfgoed en het project HAICu. In deze functie werk je intensief samen met internationale projectteams, de doelgroepeigenaar Onderzoek &amp; Erfgoed en diverse partners binnen grote consortia.</p>
+
+    <h2>Ons aanbod</h2>
+    <p>Deze vacature is ontstaan vanuit het Project Infinity. Het betreft een functie binnen de looptijd van het project, tot medio 2028. Je eerste contract is een jaarcontract. Als we blij zijn met elkaar verlengen we met veel plezier, tot het einde van het project. Het bruto maandsalaris (op fulltime basis) is minimaal € 3.452,44 en maximaal € 4.931,99 (schaal 9 CAO Beeld &amp; Geluid).</p>
+    <p>Hoe leuk werken bij Beeld &amp; Geluid ook is, we hechten ook veel waarde aan vrije tijd. Per jaar heb je daarom maar liefst 25 vakantiedagen en 24 atv-dagen (op fulltime basis). Krijg je die niet op? Dan kun je ook je vakantiedagen inzetten voor andere leuke dingen, zoals de aanschaf van een (elektrische) fiets, laptop of het verwezenlijken van een droomreis. Hiervoor maken we gebruik van een cafetariamodel.</p>
+    <p>Wij geloven dat de échte magie op de werkvloer ontstaat: dáár gebeurt het! Daarom ontmoeten we elkaar graag op kantoor en is het uitgangspunt dat je minimaal 50% van je tijd op kantoor werkt. Natuurlijk kijken we altijd met een schuin oog naar de dynamiek van je functie en je persoonlijke omstandigheden: maatwerk is altijd bespreekbaar, net zoals een vaste thuiswerkdag per week. Je ontvangt een onkostenvergoeding voor thuiswerken en voor woon-werkverkeer, afhankelijk vanuit waar je werkt!</p>
+
+    <h2>Wie ben jij?</h2>
+    <ul>
+      <li>Je hebt <mark class="hl" data-id="8" data-tag="M08">hbo- of wo-werk- en denkniveau</mark> en een studieachtergrond die net even verder kijkt dan code of de theorie.</li>
+      <li>Je hebt <mark class="hl" data-id="9" data-tag="M09">2-5 jaar werkervaring binnen een onderzoeksbureau, culturele instelling of universiteit</mark>.</li>
+      <li>Je bent nieuwsgierig en verdiept je graag in de mogelijkheid van tech en hebt een eigen mening hierover.</li>
+      <li>Je hebt verbindend vermogen, en een brede, verbindende blik waarmee je de werelden van IT, data en maatschappij aan elkaar knoopt.</li>
+      <li>Je vertelt complexe dingen begrijpelijk. Of je nu bent afgestudeerd in Science and Technology Studies, Data Science, Media Studies of een vergelijkbare interdisciplinaire richting: jij spreekt zowel de taal van de techneuten als die van de gebruikers.</li>
+      <li>Je slaat effectief een <mark class="hl" data-id="10" data-tag="M10">brug tussen verschillende disciplines</mark>; je zorgt ervoor dat complexe technische en onderzoeksmatige informatie begrijpelijk wordt overgebracht aan beleidsmakers en externe partners.</li>
+      <li>Je bent <mark class="hl" data-id="11" data-tag="M11">zelfstandig en koersvast in een dynamische projectomgeving</mark> en brengt op een heldere manier structuur aan in de verschillende taken en werkpakketten.</li>
+    </ul>
+
+    <h2>Wie zijn wij?</h2>
+    <p>Wij zijn in de eerste plaats een modern media-instituut met één van de grootste en meest moderne vooruitstrevende archieven ter wereld. We bewaren diverse soorten media, zoals radio- en televisieprogramma's, video(games), geschreven pers, politieke prenten, podcasts, websites en objecten. Onze dagelijks groeiende mediacollectie bewaren we als erfgoed voor de eeuwigheid, dat is waar wij als betrouwbaar instituut voor staan.</p>
+    <p>We zijn nog veel meer! We zijn ook een verrassende, inspirerende, creatieve en toegankelijke ontmoetingsplek voor iedereen. Van individuele bezoekers tot professionele mediamakers; iedereen is welkom en verbinden zit in ons dna. We organiseren talloze publieksactiviteiten, debatten en lezingen voor jong en oud. Scholen bieden we een breed pakket aan workshops en we stimuleren <mark class="hl" data-id="12" data-tag="M12">academisch en journalistiek onderzoek</mark>.</p>
+    <p>Met zo'n 500 bevlogen collega's, waarin we onze zeer waardevolle vrijwilligers en stagiairs natuurlijk meetellen, dragen we iedere dag vanuit ons veelkleurige pand in Hilversum, bij aan een open, vrije, inclusieve en mediawijze samenleving.</p>
+
+    <h2>Diversiteit &amp; Inclusie</h2>
+    <p>Bij Beeld &amp; Geluid hechten we veel waarde aan diversiteit en inclusie, ook in de samenstelling van onze teams. Het maakt niet uit wat je achtergrond is, wat je gelooft of op wie je valt, wij vinden het belangrijk dat je met enthousiasme bijdraagt aan onze gezamenlijke ambities en doelen.</p>
+
+    <h2>Enthousiast?</h2>
+    <p>We horen graag hoé enthousiast je bent! Solliciteer vóór 24 augustus via de sollicitatiebutton en voeg in elk geval je cv (in pdf) toe. Een (korte) motivatie vinden we fijn, als jij dat ook leuk vindt. Wil je eerst meer weten over deze vacature, dan kun je contact opnemen met Hugo Schurink, Manager Verkennen, via hschurink@beeldengeluid.nl of 06 - 8370 1680.</p>
+
+  </article>
+
+  <aside>
+    <div class="log-title">Match log</div>
+    <div class="log-sub">Klik op een item, of op een markering in de tekst.</div>
+    <div id="log-list"></div>
+  </aside>
+</main>
+
+<footer>
+  Zelf gebouwd om te laten zien waar mijn ervaring aansluit op deze vacature — <a href="mailto:hschurink@beeldengeluid.nl">Beeld &amp; Geluid</a>
+</footer>
+
+<div id="bubble">
+  <span class="bubble-close" id="bubble-close">&times;</span>
+  <span class="bubble-idx" id="bubble-idx"></span>
+  <span class="bubble-name" id="bubble-name"></span>
+  <span id="bubble-body"></span>
+</div>
+
+<script>
+  // ---------------------------------------------------------------
+  // EDIT THIS: one entry per <mark data-id="..."> in the text above.
+  // "name" is the short label, "body" is where your real matching
+  // experience goes. Everything below is placeholder / filler text.
+  // ---------------------------------------------------------------
+  const NOTES = {
+    1:  { name:"EU consortium experience", body:"Filler — e.g. 2 years as a work package contributor on a Horizon Europe / national research consortium, incl. reporting and deliverables." },
+    2:  { name:"Metadata enrichment", body:"Filler — e.g. built or piloted a (semi-)automatic metadata enrichment pipeline for an archive or collection dataset." },
+    3:  { name:"Search & discovery UX", body:"Filler — e.g. worked on improving search relevance or discovery flows for a digital collection or catalogue." },
+    4:  { name:"Interdisciplinary grounding", body:"Filler — e.g. background spanning STS / data science / heritage studies, comfortable moving between technical and humanities framing." },
+    5:  { name:"Use case definition", body:"Filler — e.g. led use-case workshops translating stakeholder needs into concrete research or product requirements." },
+    6:  { name:"End-user evaluation", body:"Filler — e.g. designed and ran evaluation studies (interviews, usability tests) with real end users of a heritage or research tool." },
+    7:  { name:"Cultural heritage data infra", body:"Filler — e.g. familiar with (or contributed to) Europeana, Data Space for Cultural Heritage, or comparable shared-infrastructure initiatives." },
+    8:  { name:"Academic level", body:"Filler — e.g. WO/MSc degree in [field], thesis or research touching on AI, media or heritage." },
+    9:  { name:"2–5 years relevant experience", body:"Filler — e.g. 3 years at a research bureau / cultural institution / university working on adjacent projects." },
+    10: { name:"Bridging disciplines", body:"Filler — e.g. regularly translated technical findings into language usable by policymakers, curators or external partners." },
+    11: { name:"Independent project delivery", body:"Filler — e.g. owned a work package or deliverable end-to-end in a multi-partner, deadline-driven project environment." },
+    12: { name:"Research culture fit", body:"Filler — e.g. published or presented academic / journalistic research relevant to media or heritage studies." }
+  };
+
+  const listEl = document.getElementById('log-list');
+  const marks = Array.from(document.querySelectorAll('mark.hl'));
+  const ids = marks.map(m => m.dataset.id);
+
+  ids.forEach(id => {
+    const note = NOTES[id];
+    const entry = document.createElement('div');
+    entry.className = 'log-entry';
+    entry.dataset.id = id;
+    entry.innerHTML = `
+      <div class="log-head">
+        <span class="log-idx">M${String(id).padStart(2,'0')}</span>
+        <span class="log-name">${note.name}</span>
+      </div>
+      <div class="log-body">${note.body}</div>
+    `;
+    listEl.appendChild(entry);
+    entry.addEventListener('click', () => activate(id, entry));
+  });
+
+  const logEntries = Array.from(document.querySelectorAll('.log-entry'));
+  const bubble = document.getElementById('bubble');
+  const bubbleIdx = document.getElementById('bubble-idx');
+  const bubbleName = document.getElementById('bubble-name');
+  const bubbleBody = document.getElementById('bubble-body');
+  let activeId = null;
+
+  marks.forEach(mark => {
+    mark.addEventListener('click', (e) => {
+      e.stopPropagation();
+      activate(mark.dataset.id, mark);
+    });
+  });
+
+  document.getElementById('bubble-close').addEventListener('click', (e) => {
+    e.stopPropagation();
+    deactivateAll();
+  });
+
+  function activate(id, sourceEl){
+    if (activeId === id){
+      deactivateAll();
+      return;
+    }
+    activeId = id;
+    marks.forEach(m => m.classList.toggle('active', m.dataset.id === id));
+    logEntries.forEach(e => e.classList.toggle('active', e.dataset.id === id));
+
+    const mark = marks.find(m => m.dataset.id === id);
+    const entry = logEntries.find(e => e.dataset.id === id);
+    const note = NOTES[id];
+
+    bubbleIdx.textContent = `M${String(id).padStart(2,'0')}`;
+    bubbleName.textContent = note.name;
+    bubbleBody.textContent = note.body;
+
+    if (sourceEl === mark){
+      entry.scrollIntoView({ block:'nearest', behavior:'smooth' });
+      positionBubble(mark);
+    } else {
+      mark.scrollIntoView({ block:'center', behavior:'smooth' });
+      setTimeout(() => positionBubble(mark), 300);
+    }
+    bubble.classList.add('show');
+  }
+
+  function positionBubble(mark){
+    const rect = mark.getBoundingClientRect();
+    const bw = bubble.offsetWidth || 280;
+    const bh = bubble.offsetHeight || 90;
+    let left = rect.left;
+    let top = rect.bottom + 8;
+    if (left + bw > window.innerWidth - 12) left = window.innerWidth - bw - 12;
+    if (left < 12) left = 12;
+    if (top + bh > window.innerHeight - 12) top = rect.top - bh - 8;
+    bubble.style.left = left + 'px';
+    bubble.style.top = top + 'px';
+  }
+
+  function deactivateAll(){
+    activeId = null;
+    marks.forEach(m => m.classList.remove('active'));
+    logEntries.forEach(e => e.classList.remove('active'));
+    bubble.classList.remove('show');
+  }
+
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('mark.hl') && !e.target.closest('.log-entry') && !e.target.closest('#bubble')){
+      deactivateAll();
+    }
+  });
+
+  window.addEventListener('resize', () => {
+    if (!activeId) return;
+    const mark = marks.find(m => m.dataset.id === activeId);
+    positionBubble(mark);
+  });
+
+  document.getElementById('counter').textContent = ids.length;
+</script>
+
+</body>
+</html>
