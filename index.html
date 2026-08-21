@@ -174,7 +174,7 @@
   .log-entry.active .log-body{ max-height:220px; margin-top:0.55rem; color:var(--gray-light); }
 
   #bubble{
-    position:fixed;
+    position:absolute;
     max-width:280px;
     background:var(--white);
     border:1px solid var(--black);
@@ -397,7 +397,7 @@
     bubble.classList.add('show');
   }
 
-  function positionBubble(mark){
+   function positionBubble(mark){
     const rect = mark.getBoundingClientRect();
     const bw = bubble.offsetWidth || 280;
     const bh = bubble.offsetHeight || 90;
@@ -406,8 +406,8 @@
     if (left + bw > window.innerWidth - 12) left = window.innerWidth - bw - 12;
     if (left < 12) left = 12;
     if (top + bh > window.innerHeight - 12) top = rect.top - bh - 8;
-    bubble.style.left = left + 'px';
-    bubble.style.top = top + 'px';
+    bubble.style.left = (left + window.scrollX) + 'px';
+    bubble.style.top = (top + window.scrollY) + 'px';
   }
 
   function deactivateAll(){
