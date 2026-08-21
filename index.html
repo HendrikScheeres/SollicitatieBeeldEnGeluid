@@ -184,6 +184,8 @@
     z-index:100;
     box-shadow:4px 4px 0 var(--black);
     display:none;
+    overflow-wrap:break-word;
+    word-break:break-word;
   }
   #bubble .bubble-body{
   display:block;
@@ -374,45 +376,53 @@
     deactivateAll();
   });
 
-  function activate(id, sourceEl){
-    if (activeId === id){
-      deactivateAll();
-      return;
-    }
-    activeId = id;
-    marks.forEach(m => m.classList.toggle('active', m.dataset.id === id));
-    logEntries.forEach(e => e.classList.toggle('active', e.dataset.id === id));
+ function activate(id, sourceEl){
+  if (activeId === id){
+    deactivateAll();
+    return;
+  }
+  activeId = id;
+  marks.forEach(m => m.classList.toggle('active', m.dataset.id === id));
+  logEntries.forEach(e => e.classList.toggle('active', e.dataset.id === id));
 
-    const mark = marks.find(m => m.dataset.id === id);
-    const entry = logEntries.find(e => e.dataset.id === id);
-    const note = NOTES[id];
+  const mark = marks.find(m => m.dataset.id === id);
+  const entry = logEntries.find(e => e.dataset.id === id);
+  const note = NOTES[id];
 
-    bubbleIdx.textContent = `M${String(id).padStart(2,'0')}`;
-    bubbleName.textContent = note.name;
-    bubbleBody.textContent = note.body;
+  bubbleIdx.textContent = `M${String(id).padStart(2,'0')}`;
+  bubbleName.textContent = note.name;
+  bubbleBody.textContent = note.body;
 
-    if (sourceEl === mark){
-      entry.scrollIntoView({ block:'nearest', behavior:'smooth' });
+  // Eerst onzichtbaar renderen zodat we de echte afmetingen kennen
+  bubble.style.visibility = 'hidden';
+  bubble.style.display = 'block';
+
+  if (sourceEl === mark){
+    entry.scrollIntoView({ block:'nearest', behavior:'smooth' });
+    positionBubble(mark);
+    bubble.style.visibility = 'visible';
+  } else {
+    mark.scrollIntoView({ block:'center', behavior:'smooth' });
+    setTimeout(() => {
       positionBubble(mark);
-    } else {
-      mark.scrollIntoView({ block:'center', behavior:'smooth' });
-      setTimeout(() => positionBubble(mark), 300);
-    }
-    bubble.classList.add('show');
+      bubble.style.visibility = 'visible';
+    }, 300);
   }
+  bubble.classList.add('show');
+}
 
-   function positionBubble(mark){
-    const rect = mark.getBoundingClientRect();
-    const bw = bubble.offsetWidth || 280;
-    const bh = bubble.offsetHeight || 90;
-    let left = rect.left;
-    let top = rect.bottom + 8;
-    if (left + bw > window.innerWidth - 12) left = window.innerWidth - bw - 12;
-    if (left < 12) left = 12;
-    if (top + bh > window.innerHeight - 12) top = rect.top - bh - 8;
-    bubble.style.left = (left + window.scrollX) + 'px';
-    bubble.style.top = (top + window.scrollY) + 'px';
-  }
+function positionBubble(mark){
+  const rect = mark.getBoundingClientRect();
+  const bw = bubble.offsetWidth;   // nu altijd de échte breedte
+  const bh = bubble.offsetHeight;  // nu altijd de échte hoogte
+  let left = rect.left;
+  let top = rect.bottom + 8;
+  if (left + bw > window.innerWidth - 12) left = window.innerWidth - bw - 12;
+  if (left < 12) left = 12;
+  if (top + bh > window.innerHeight - 12) top = rect.top - bh - 8;
+  bubble.style.left = (left + window.scrollX) + 'px';
+  bubble.style.top = (top + window.scrollY) + 'px';
+}
 
   function deactivateAll(){
     activeId = null;
