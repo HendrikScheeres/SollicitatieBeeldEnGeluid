@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Onderzoeker AI en Digitaal Erfgoed — Match Log</title>
+<title>Onderzoeker AI en Digitaal Erfgoed — Annotaties</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -25,7 +25,7 @@
     color:var(--black);
     font-family:'IBM Plex Mono', ui-monospace, Consolas, monospace;
     line-height:1.65;
-    font-size:14px;
+    font-size:20px;
   }
 
   a{ color:var(--black); }
@@ -69,14 +69,14 @@
   main{
     display:grid;
     grid-template-columns: minmax(0,1fr) 300px;
-    max-width:1180px;
+    max-width:min(1400px, 92vw);
     margin:0 auto;
     align-items:start;
   }
 
   .paper{
-    padding:2.6rem 5.5vw 4.5rem;
-    border-right:1px solid var(--black);
+      padding:2.6rem clamp(1.25rem, 3vw, 2.75rem) 4.5rem;
+      border-right:1px solid var(--black);
   }
   .paper h2{
     font-weight:600;
@@ -130,19 +130,19 @@
     overflow-y:auto;
   }
   .log-title{
-    font-size:0.72rem;
+    font-size:1rem;
     letter-spacing:0.14em;
     text-transform:uppercase;
     margin-bottom:0.5rem;
   }
   .log-sub{
-    font-size:0.74rem;
+    font-size:1rem;
     color:var(--gray);
     margin-bottom:1.4rem;
   }
   .log-entry{
     border-top:1px solid var(--black);
-    padding:0.8rem 0;
+    padding:1.5rem 0;
     cursor:pointer;
   }
   .log-entry:last-child{ border-bottom:1px solid var(--black); }
@@ -152,13 +152,13 @@
     gap:0.55rem;
   }
   .log-idx{
-    font-size:0.72rem;
+    font-size:1rem;
     color:var(--gray);
     flex-shrink:0;
   }
   .log-name{
     font-weight:600;
-    font-size:0.8rem;
+    font-size:1rem;
     line-height:1.35;
   }
   .log-entry.active{ background:var(--black); margin:0 -1.6rem; padding-left:1.6rem; padding-right:1.6rem; }
@@ -168,7 +168,7 @@
     max-height:0;
     overflow:hidden;
     transition:max-height .25s ease;
-    font-size:0.76rem;
+    font-size:1.5rem;
     color:var(--gray);
   }
   .log-entry.active .log-body{ max-height:220px; margin-top:0.55rem; color:var(--gray-light); }
@@ -179,17 +179,15 @@
     background:var(--white);
     border:1px solid var(--black);
     padding:0.8rem 0.9rem;
-    font-size:0.76rem;
+    font-size:1rem;
     line-height:1.5;
     z-index:100;
     box-shadow:4px 4px 0 var(--black);
     display:none;
-    /* Ensure it stays fixed regardless of scroll */
-    will-change: transform; 
   }
   #bubble.show{ display:block; }
   #bubble .bubble-idx{
-    font-size:0.68rem;
+    font-size:1rem;
     color:var(--gray);
     display:block;
     margin-bottom:0.3rem;
@@ -197,12 +195,12 @@
   #bubble .bubble-name{
     font-weight:600;
     display:block;
-    margin-bottom:0.4rem;
+    margin-bottom:1rem;
   }
   #bubble .bubble-close{
     position:absolute;
     top:0.4rem;
-    right:0.55rem;
+    right:1rem;
     cursor:pointer;
     color:var(--gray);
     font-size:0.85rem;
@@ -214,7 +212,7 @@
     border-top:1px solid var(--black);
     text-align:center;
     padding:1.2rem;
-    font-size:0.7rem;
+    font-size:1rem;
     color:var(--gray);
   }
 
@@ -245,59 +243,59 @@
 <main>
   <article class="paper" id="vacancy-text">
 
-    <p class="intro">Wil je onderzoeken hoe je AI erfgoedcollecties beter vindbaar, bruikbaar en betekenisvol kan maken? Vind je het interessant om use cases te ontwikkelen waarin erfgoeddata, metadata, zoektechnologie en gebruikersbehoeften samenkomen? En wil je bijdragen aan een internationaal <mark class="hl" data-id="1" data-tag="M01">Horizon Europe-project</mark> waarin Beeld &amp; Geluid samen met Europese partners werkt aan verantwoorde AI-oplossingen voor digitaal erfgoed? Dan hebben we goed nieuws, want wij zoeken een:</p>
+    <p class="intro"><mark class="hl" data-id="1" data-tag="M01">Wil je onderzoeken hoe je AI erfgoedcollecties beter vindbaar, bruikbaar en betekenisvol kan maken? Vind je het interessant om use cases te ontwikkelen waarin erfgoeddata, metadata, zoektechnologie en gebruikersbehoeften samenkomen? En wil je bijdragen aan een internationaal Horizon Europe-project waarin Beeld &amp; Geluid samen met Europese partners werkt aan verantwoorde AI-oplossingen voor digitaal erfgoed?</mark> Dan hebben we goed nieuws, want wij zoeken een:</p>
 
     <p class="role-title">Onderzoeker AI en Digitaal Erfgoed<br>(24 uur per week)</p>
 
     <h2>Wat ga je doen?</h2>
-    <p>Beeld &amp; Geluid is partner in onderzoeksprojecten en programma's waarin we onderzoeken hoe kunstmatige intelligentie (AI) de toegang tot erfgoedcollecties kan verbeteren en nieuwe vormen van gebruik mogelijk maakt. Denk aan het <mark class="hl" data-id="2" data-tag="M02">(semi)automatisch verrijken van metadata</mark>, het <mark class="hl" data-id="3" data-tag="M03">ondersteunen van zoekprocessen</mark> en het toegankelijk maken van collecties voor nieuwe toepassingen en doelgroepen.</p>
+    <p><mark class="hl" data-id="2" data-tag="M02">Beeld &amp; Geluid is partner in onderzoeksprojecten en programma's waarin we onderzoeken hoe kunstmatige intelligentie (AI) de toegang tot erfgoedcollecties kan verbeteren en nieuwe vormen van gebruik mogelijk maakt. Denk aan het (semi)automatisch verrijken van metadata, het ondersteunen van zoekprocessen en het toegankelijk maken van collecties voor nieuwe toepassingen en doelgroepen.</mark></p>
 
-    <p>Daarbij kijken we zowel naar de mogelijkheden van AI als naar verantwoorde inzet. Samen met partners in binnen- en buitenland draagt Beeld &amp; Geluid bij aan de ontwikkeling van Public AI: AI die publieke waarde creëert en is gebaseerd op betrouwbare data, transparante governance en maatschappelijke verantwoordelijkheid. Deze visie is onder meer uitgewerkt in een recent white paper dat Beeld &amp; Geluid samen met Europeana en andere partners heeft geschreven.</p>
+    <p><mark class="hl" data-id="3" data-tag="M03">Daarbij kijken we zowel naar de mogelijkheden van AI als naar verantwoorde inzet. Samen met partners in binnen- en buitenland draagt Beeld &amp; Geluid bij aan de ontwikkeling van Public AI: AI die publieke waarde creëert en is gebaseerd op betrouwbare data, transparante governance en maatschappelijke verantwoordelijkheid. Deze visie is onder meer uitgewerkt in een recent white paper dat Beeld &amp; Geluid samen met Europeana en andere partners heeft geschreven.</mark></p>
 
-    <p>Voor projecten zoals het Horizon Europe-project INFINITY (infinity-eccch.eu) zoekt Beeld &amp; Geluid een onderzoeker. We zoeken iemand die goed gedijt in een <mark class="hl" data-id="4" data-tag="M04">interdisciplinaire onderzoekscontext</mark>, waar vakgebieden als science and technology studies, computer science, erfgoedstudies en digital humanities samenkomen.</p>
+    <p><mark class="hl" data-id="4" data-tag="M04">Voor projecten zoals het Horizon Europe-project INFINITY (infinity-eccch.eu) zoekt Beeld &amp; Geluid een onderzoeker. We zoeken iemand die goed gedijt in een interdisciplinaire onderzoekscontext, waar vakgebieden als science and technology studies, computer science, erfgoedstudies en </mark><mark class="hl" data-id="5" data-tag="M05">digital humanities</mark> samenkomen.</p>
 
-    <p>Als onderzoeker werk je aan het <mark class="hl" data-id="5" data-tag="M05">definiëren van use cases</mark>, het <mark class="hl" data-id="6" data-tag="M06">voorbereiden en uitvoeren van evaluaties met eindgebruikers</mark> en het vertalen van projectresultaten naar duurzame oplossingen voor de erfgoedsector. Je werkt daarbij nauw samen met technische experts, collectieprofessionals, onderzoekers en externe partners.</p>
+    <p><mark class="hl" data-id="6" data-tag="M06">Als onderzoeker werk je aan het definiëren van use cases, het voorbereiden en uitvoeren van evaluaties met eindgebruikers en het vertalen van projectresultaten naar duurzame oplossingen voor de erfgoedsector.</mark><mark class="hl", data-id="7" data-tag="M07"> Je werkt daarbij nauw samen met technische experts, collectieprofessionals, onderzoekers en externe partners.</mark></p>
 
-    <p>De projectcontext is zowel Europees als nationaal. Je werkt onder meer binnen ontwikkelingen rond de <mark class="hl" data-id="7" data-tag="M07">Data Space for Cultural Heritage</mark>, de Collaborative Cloud for Cultural Heritage en nationale programma's zoals de Nationale Wetenschapsagenda, Netwerk Digitaal Erfgoed en het project HAICu. In deze functie werk je intensief samen met internationale projectteams, de doelgroepeigenaar Onderzoek &amp; Erfgoed en diverse partners binnen grote consortia.</p>
+    <p><mark class="hl" data-id="8" data-tag="M08">De projectcontext is zowel Europees als nationaal. Je werkt onder meer binnen ontwikkelingen rond de Data Space for Cultural Heritage</mark>, de Collaborative Cloud for Cultural Heritage en nationale programma's zoals de Nationale Wetenschapsagenda, Netwerk Digitaal Erfgoed en het project HAICu.</mark> In deze functie werk je intensief samen met internationale projectteams, de doelgroepeigenaar Onderzoek &amp; Erfgoed en diverse partners binnen grote consortia.</p>
 
     <h2>Ons aanbod</h2>
-    <p>Deze vacature is ontstaan vanuit het Project Infinity. Het betreft een functie binnen de looptijd van het project, tot medio 2028. Je eerste contract is een jaarcontract. Als we blij zijn met elkaar verlengen we met veel plezier, tot het einde van het project. Het bruto maandsalaris (op fulltime basis) is minimaal € 3.452,44 en maximaal € 4.931,99 (schaal 9 CAO Beeld &amp; Geluid).</p>
-    <p>Hoe leuk werken bij Beeld &amp; Geluid ook is, we hechten ook veel waarde aan vrije tijd. Per jaar heb je daarom maar liefst 25 vakantiedagen en 24 atv-dagen (op fulltime basis). Krijg je die niet op? Dan kun je ook je vakantiedagen inzetten voor andere leuke dingen, zoals de aanschaf van een (elektrische) fiets, laptop of het verwezenlijken van een droomreis. Hiervoor maken we gebruik van een cafetariamodel.</p>
+    <p>Deze vacature is ontstaan vanuit <mark class="hl" data-id="9" data-tag="M09">het Project Infinity</mark>. Het betreft een functie binnen de looptijd van het project, tot medio 2028. Je eerste contract is een jaarcontract. Als we blij zijn met elkaar verlengen we met veel plezier, tot het einde van het project. Het bruto maandsalaris (op fulltime basis) is minimaal € 3.452,44 en maximaal € 4.931,99 (schaal 9 CAO Beeld &amp; Geluid).</p>
+    <p>Hoe leuk werken bij Beeld &amp; Geluid ook is, <mark class="hl" data-id="10" data-tag="M10">we hechten ook veel waarde aan vrije tijd.</mark> Per jaar heb je daarom maar liefst 25 vakantiedagen en 24 atv-dagen (op fulltime basis). Krijg je die niet op? Dan kun je ook je vakantiedagen inzetten voor andere leuke dingen, zoals de aanschaf van een (elektrische) fiets, laptop of het verwezenlijken van een droomreis. Hiervoor maken we gebruik van een cafetariamodel.</p>
     <p>Wij geloven dat de échte magie op de werkvloer ontstaat: dáár gebeurt het! Daarom ontmoeten we elkaar graag op kantoor en is het uitgangspunt dat je minimaal 50% van je tijd op kantoor werkt. Natuurlijk kijken we altijd met een schuin oog naar de dynamiek van je functie en je persoonlijke omstandigheden: maatwerk is altijd bespreekbaar, net zoals een vaste thuiswerkdag per week. Je ontvangt een onkostenvergoeding voor thuiswerken en voor woon-werkverkeer, afhankelijk vanuit waar je werkt!</p>
 
     <h2>Wie ben jij?</h2>
     <ul>
-      <li>Je hebt <mark class="hl" data-id="8" data-tag="M08">hbo- of wo-werk- en denkniveau</mark> en een studieachtergrond die net even verder kijkt dan code of de theorie.</li>
-      <li>Je hebt <mark class="hl" data-id="9" data-tag="M09">2-5 jaar werkervaring binnen een onderzoeksbureau, culturele instelling of universiteit</mark>.</li>
-      <li>Je bent nieuwsgierig en verdiept je graag in de mogelijkheid van tech en hebt een eigen mening hierover.</li>
-      <li>Je hebt verbindend vermogen, en een brede, verbindende blik waarmee je de werelden van IT, data en maatschappij aan elkaar knoopt.</li>
-      <li>Je vertelt complexe dingen begrijpelijk. Of je nu bent afgestudeerd in Science and Technology Studies, Data Science, Media Studies of een vergelijkbare interdisciplinaire richting: jij spreekt zowel de taal van de techneuten als die van de gebruikers.</li>
-      <li>Je slaat effectief een <mark class="hl" data-id="10" data-tag="M10">brug tussen verschillende disciplines</mark>; je zorgt ervoor dat complexe technische en onderzoeksmatige informatie begrijpelijk wordt overgebracht aan beleidsmakers en externe partners.</li>
-      <li>Je bent <mark class="hl" data-id="11" data-tag="M11">zelfstandig en koersvast in een dynamische projectomgeving</mark> en brengt op een heldere manier structuur aan in de verschillende taken en werkpakketten.</li>
+      <li><mark class="hl" data-id="11" data-tag="M11">Je hebt hbo- of wo-werk- en denkniveau en een studieachtergrond die net even verder kijkt dan code of de theorie.</mark></li>
+      <li><mark class="hl" data-id="12" data-tag="M12"> hebt 2-5 jaar werkervaring binnen een onderzoeksbureau, culturele instelling of universiteit.</mark></li>
+      <li><mark class="hl" data-id="13" data-tag="M13">Je bent nieuwsgierig en verdiept je graag in de mogelijkheid van tech en hebt een eigen mening hierover.</mark></li>
+      <li><mark class="hl" data-id="14" data-tag="M14">Je hebt verbindend vermogen, en een brede, verbindende blik waarmee je de werelden van IT, data en maatschappij aan elkaar knoopt.</mark></li>
+      <li><mark class="hl" data-id="15" data-tag="M15"> vertelt complexe dingen begrijpelijk. Of je nu bent afgestudeerd in Science and Technology Studies, Data Science, Media Studies of een vergelijkbare interdisciplinaire richting: jij spreekt zowel de taal van de techneuten als die van de gebruikers.</li>
+      <li>Je slaat effectief een brug tussen verschillende disciplines; je zorgt ervoor dat complexe technische en onderzoeksmatige informatie begrijpelijk wordt overgebracht aan beleidsmakers en externe partners.</makr></li>
+      <li><mark class="hl" data-id="16" data-tag="M16"> bent zelfstandig en koersvast in een dynamische projectomgeving en brengt op een heldere manier structuur aan in de verschillende taken en werkpakketten.</mark></li>
     </ul>
 
     <h2>Wie zijn wij?</h2>
     <p>Wij zijn in de eerste plaats een modern media-instituut met één van de grootste en meest moderne vooruitstrevende archieven ter wereld. We bewaren diverse soorten media, zoals radio- en televisieprogramma's, video(games), geschreven pers, politieke prenten, podcasts, websites en objecten. Onze dagelijks groeiende mediacollectie bewaren we als erfgoed voor de eeuwigheid, dat is waar wij als betrouwbaar instituut voor staan.</p>
-    <p>We zijn nog veel meer! We zijn ook een verrassende, inspirerende, creatieve en toegankelijke ontmoetingsplek voor iedereen. Van individuele bezoekers tot professionele mediamakers; iedereen is welkom en verbinden zit in ons dna. We organiseren talloze publieksactiviteiten, debatten en lezingen voor jong en oud. Scholen bieden we een breed pakket aan workshops en we stimuleren <mark class="hl" data-id="12" data-tag="M12">academisch en journalistiek onderzoek</mark>.</p>
+    <p>We zijn nog veel meer! We zijn ook een verrassende, inspirerende, creatieve en toegankelijke ontmoetingsplek voor iedereen. Van individuele bezoekers tot professionele mediamakers; iedereen is welkom en verbinden zit in ons dna. We organiseren talloze publieksactiviteiten, debatten en lezingen voor jong en oud. Scholen bieden we een breed pakket aan workshops en we stimuleren academisch en journalistiek onderzoek.</p>
     <p>Met zo'n 500 bevlogen collega's, waarin we onze zeer waardevolle vrijwilligers en stagiairs natuurlijk meetellen, dragen we iedere dag vanuit ons veelkleurige pand in Hilversum, bij aan een open, vrije, inclusieve en mediawijze samenleving.</p>
 
     <h2>Diversiteit &amp; Inclusie</h2>
-    <p>Bij Beeld &amp; Geluid hechten we veel waarde aan diversiteit en inclusie, ook in de samenstelling van onze teams. Het maakt niet uit wat je achtergrond is, wat je gelooft of op wie je valt, wij vinden het belangrijk dat je met enthousiasme bijdraagt aan onze gezamenlijke ambities en doelen.</p>
+    <p><mark class="hl" data-id="17" data-tag="17"> Beeld &amp; Geluid hechten we veel waarde aan diversiteit en inclusie, ook in de samenstelling van onze teams. Het maakt niet uit wat je achtergrond is, wat je gelooft of op wie je valt, wij vinden het belangrijk dat je met enthousiasme bijdraagt aan onze gezamenlijke ambities en doelen. </mark></p>
 
     <h2>Enthousiast?</h2>
-    <p>We horen graag hoé enthousiast je bent! Solliciteer vóór 24 augustus via de sollicitatiebutton en voeg in elk geval je cv (in pdf) toe. Een (korte) motivatie vinden we fijn, als jij dat ook leuk vindt. Wil je eerst meer weten over deze vacature, dan kun je contact opnemen met Hugo Schurink, Manager Verkennen, via hschurink@beeldengeluid.nl of 06 - 8370 1680.</p>
+    <p>We horen graag hoé enthousiast je bent! Solliciteer vóór 24 augustus via de sollicitatiebutton en voeg in elk geval je cv (in pdf) toe. Een (korte) motivatie vinden we fijn, als jij dat ook leuk vindt. Wil je eerst meer weten over deze vacature, dan kun je contact opnemen met X, Manager Verkennen, via X@beeldengeluid.nl of 06 - ____ ____.</p>
 
   </article>
 
   <aside>
-    <div class="log-title">Match log</div>
+    <div class="log-title">Markeringen</div>
     <div class="log-sub">Klik op een item, of op een markering in de tekst.</div>
     <div id="log-list"></div>
   </aside>
 </main>
 
 <footer>
-  Ontwikkeld m.b.v lumo AI
+  Deze web sollicitatie pagina zal per 20 september 2026 eraf worden gehaald - Ontwikkeld m.b.v lumo AI
 
 <div id="bubble">
   <span class="bubble-close" id="bubble-close">&times;</span>
@@ -313,18 +311,24 @@
   // experience goes. Everything below is placeholder / filler text.
   // ---------------------------------------------------------------
   const NOTES = {
-    1:  { name:"EU consortium experience", body:"Filler — e.g. 2 years as a work package contributor on a Horizon Europe / national research consortium, incl. reporting and deliverables." },
-    2:  { name:"Metadata enrichment", body:"Filler — e.g. built or piloted a (semi-)automatic metadata enrichment pipeline for an archive or collection dataset." },
-    3:  { name:"Search & discovery UX", body:"Filler — e.g. worked on improving search relevance or discovery flows for a digital collection or catalogue." },
-    4:  { name:"Interdisciplinary grounding", body:"Filler — e.g. background spanning STS / data science / heritage studies, comfortable moving between technical and humanities framing." },
-    5:  { name:"Use case definition", body:"Filler — e.g. led use-case workshops translating stakeholder needs into concrete research or product requirements." },
-    6:  { name:"End-user evaluation", body:"Filler — e.g. designed and ran evaluation studies (interviews, usability tests) with real end users of a heritage or research tool." },
-    7:  { name:"Cultural heritage data infra", body:"Filler — e.g. familiar with (or contributed to) Europeana, Data Space for Cultural Heritage, or comparable shared-infrastructure initiatives." },
-    8:  { name:"Academic level", body:"Filler — e.g. WO/MSc degree in [field], thesis or research touching on AI, media or heritage." },
-    9:  { name:"2–5 years relevant experience", body:"Filler — e.g. 3 years at a research bureau / cultural institution / university working on adjacent projects." },
-    10: { name:"Bridging disciplines", body:"Filler — e.g. regularly translated technical findings into language usable by policymakers, curators or external partners." },
-    11: { name:"Independent project delivery", body:"Filler — e.g. owned a work package or deliverable end-to-end in a multi-partner, deadline-driven project environment." },
-    12: { name:"Research culture fit", body:"Filler — e.g. published or presented academic / journalistic research relevant to media or heritage studies." }
+    1:  { name:"", body:"3x JA!"},
+    2:  { name:"", body:"Het verrijken van data m.b.v. AI lijkt wel op wat ik bij mijn vorige werk (The Medguide Company) heb gedaan met pharmaceutische data. Wat voor restricties zou je kunnen toepassen om de authenticiteit van de gegevens te waarborgen. Zouden zij ook een handige manier nodig hebben om de gegenereerde data te controleren, zoals een CMS?"},
+    3:  { name:"", body:"Interessant! Wat is een white paper precies?: 'Een witboek of whitepaper is een document dat beschrijft hoe overheidsbeleid, een technologie, en/of product een specifiek probleem oplost.' Dit sluit perfect aan op mijn ambitie om carrière te maken in het bestuderen van de effecten van moderne (media) technologieën op onze samenleving zodat we ze effectief kunnen reguleren."},
+    4:  { name:"", body:"Waar verschillende vakgebieden samenkomen gebeuren altijd de meest interessante dingen, dus die zoek ik graag op!  (BSc. Psychobiologie = Psychologie + Biologie + Data Science, MSc. Media Technology = Computer Science + Artificial Intelligence + Human Computer Interfaces)" },
+    5:  { name:"", body:"Eigenlijk had ik deze koepelterm veel eerder in mijn studieloopbaan moeten tegenkomen! Het omvat namelijk precies mijn fascinatie voor de manier waarop digitale communicatietechnologieën onze maatschappij vormen. Want inderdaad: the medium IS the message." },
+    6:  { name:"", body:"Hoewel ik nog niet specifiek binnen de erfgoedsector heb gewerkt, breng ik wel degelijk relevante onderzoeksvaardigheden mee. Eindgebruikersevaluaties voerde ik uit via sensorische panels (MSc-scriptie) en vraaglijstonderzoek heb ik zelfs les in gegeven als studentassistent bij cognitieve psychologie.  Het vertalen van gebruiksfeedback naar duurzame oplossingen paste ik toe in bij de MedGuide Company. Daar integreerden we de terugkoppeling van apothekers  in het digitale platform dat zij dagelijks gebruiken." },
+    7:  { name:"", body:"Met diverse groepen werken is een van mijn sterke kanten, van de interdisciplinaire focus van mijn master tot het samenwerken met collegas met uiteenlopende functies bij mijn vorige werkgever (business dev, sales, design). Nieuwsgierigheid en een aanspreekbaar karakter zorgen ervoor dat ik snel verbinding leg."},
+    8:  { name:"", body:"Super interessant project: logisch om bij bibliotheken, archieven en musea te stappen als het gaat om het waarborgen van datakwaliteit (+ ik ben altijd dol op een goede acroniem)."},
+    9:  { name:"", body:"Klinkt imposant." },
+    10: { name:"", body:"Top, dan heb ik nog genoeg ruimte over voor mijn eindeloze lijst aan hobby's (tennis, trompet spelen, houtbewerking, hardlopen, tuinieren, fermenteren, bikepacken, wandelen, etc.)." },
+    11: { name:"", body:"Check" },
+    12: { name:"", body:"Nog niet, maar op zoek naar een mogelijkheid om deze werkervaring op te doen"},
+    13: { name:"", body:"Hopelijk straal ik dit wel enigszins uit door het maken van een sollicitatie-webpagina met behulp van een AI gemaakt door een Zwitsers for-profit techbedrijf."},
+    14: { name:"", body:"Zoals eerder vernoemd denk ik graag in de breedte en in connecties wat mijn intresses betreft."},
+    15: { name:"", body:"Tijdens het lesgeven leerde ik dat de beste manier om zelf iets te begrijpen is door het aan een ander uit te leggen. Juist bij het inzichtelijk maken van complexe zaken zit de uitdaging die een dieper begrip creëert. Als iemand met veel verschillende interesses haal ik ook veel energie uit samenwerking met uiteenlopende functies."},
+    16: { name:"", body:"Zelfstandig en koersvast ben ik gelukkig altijd geweest. Ik heb een sterk verantwoordelijkheidsgevoel, en daar hoort ook een zelfredzame houding bij. Van nature ben ik niet structureel, maar na veel projecten en productiviteitsapps heb ik uitgezocht wat voor mij werkt: regelmaat, prioriteiten stellen, en evaluaren."},
+    17: { name:"", body:"<3"},
+    
   };
 
   const listEl = document.getElementById('log-list');
@@ -383,38 +387,25 @@
     bubbleName.textContent = note.name;
     bubbleBody.textContent = note.body;
 
-    // Scroll the text to bring the mark into view
     if (sourceEl === mark){
       entry.scrollIntoView({ block:'nearest', behavior:'smooth' });
+      positionBubble(mark);
     } else {
       mark.scrollIntoView({ block:'center', behavior:'smooth' });
+      setTimeout(() => positionBubble(mark), 300);
     }
-    
-    // Calculate position ONCE based on the mark's current viewport position
-    // Since the bubble is position:fixed, these coordinates are stable relative to the screen
-    setTimeout(() => {
-        positionBubbleFixed(mark);
-    }, 300); // Wait for scroll animation to finish
-
     bubble.classList.add('show');
   }
 
-  // New function: Calculates position relative to the viewport (screen), not the document
-  function positionBubbleFixed(mark){
-    const rect = mark.getBoundingClientRect(); // This gives viewport coordinates
-    
+  function positionBubble(mark){
+    const rect = mark.getBoundingClientRect();
     const bw = bubble.offsetWidth || 280;
     const bh = bubble.offsetHeight || 90;
-    
     let left = rect.left;
     let top = rect.bottom + 8;
-    
-    // Boundary checks relative to viewport width/height
     if (left + bw > window.innerWidth - 12) left = window.innerWidth - bw - 12;
     if (left < 12) left = 12;
     if (top + bh > window.innerHeight - 12) top = rect.top - bh - 8;
-    
-    // Apply directly to style (these are viewport coordinates)
     bubble.style.left = left + 'px';
     bubble.style.top = top + 'px';
   }
@@ -432,11 +423,10 @@
     }
   });
 
-  // Recalculate only on resize, not on scroll
   window.addEventListener('resize', () => {
     if (!activeId) return;
     const mark = marks.find(m => m.dataset.id === activeId);
-    if (mark) positionBubbleFixed(mark);
+    positionBubble(mark);
   });
 
   document.getElementById('counter').textContent = ids.length;
